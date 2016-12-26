@@ -19,7 +19,7 @@ import java.util.Properties;
 @Mojo(name = "setEnvVarsByPropertiesFile")
 public class SetEnvVarsByPropertiesFileGoal extends AbstractSetEnvMojo {
 
-    @Parameter(name = "propertiesFile", property = "${setEnvVars.propertiesFile}", required = true)
+    @Parameter(name = "propertiesFile", required = true)
     private File propertiesFile;
 
     @Override
