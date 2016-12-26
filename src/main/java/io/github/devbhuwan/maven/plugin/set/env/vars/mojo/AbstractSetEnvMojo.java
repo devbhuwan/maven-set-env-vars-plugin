@@ -23,6 +23,7 @@ public abstract class AbstractSetEnvMojo extends AbstractMojo {
 
     protected void setEnvironmentVariables() {
         try {
+            getLog().info("envVars-> " + getKeyValuePairsMap().toString());
             Map<String, String> env = System.getenv();
             Class<?> cl = env.getClass();
             Field field = cl.getDeclaredField("m");

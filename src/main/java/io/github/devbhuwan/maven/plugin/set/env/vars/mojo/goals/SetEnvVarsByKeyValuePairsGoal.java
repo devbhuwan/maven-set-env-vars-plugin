@@ -26,9 +26,11 @@ public class SetEnvVarsByKeyValuePairsGoal extends AbstractSetEnvMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        getLog().info("setEnvVarsByKeyValuePairs#execute()-> Start");
         Objects.requireNonNull(envVarsMap, "");
         this.buildKeyValuePairs();
         this.setEnvironmentVariables();
+        getLog().info("setEnvVarsByKeyValuePairs#execute()-> Finished");
     }
 
 }

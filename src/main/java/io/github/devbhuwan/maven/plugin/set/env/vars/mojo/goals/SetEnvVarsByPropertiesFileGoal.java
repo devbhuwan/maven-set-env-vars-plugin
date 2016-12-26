@@ -35,9 +35,11 @@ public class SetEnvVarsByPropertiesFileGoal extends AbstractSetEnvMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        getLog().info("setEnvVarsByPropertiesFile#execute()-> Start");
         Objects.requireNonNull(propertiesFile, "");
         this.buildKeyValuePairs();
         this.setEnvironmentVariables();
+        getLog().info("setEnvVarsByPropertiesFile#execute()-> Finished");
     }
 
 }
