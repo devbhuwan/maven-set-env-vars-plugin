@@ -1,8 +1,9 @@
 package io.github.devbhuwan.maven.plugin.set.env.vars.mojo;
 
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractSetEnvMojo extends AbstractMojo {
 
+    @Parameter(defaultValue = "${project}")
+    protected MavenProject mavenProject;
 
     protected Map<String, String> keyValuePairsMap = new ConcurrentHashMap<>();
 
@@ -24,14 +27,11 @@ public abstract class AbstractSetEnvMojo extends AbstractMojo {
     protected void setEnvironmentVariables() {
         try {
             getLog().info("envVars-> " + getKeyValuePairsMap().toString());
-            Map<String, String> env = System.getenv();
-            Class<?> cl = env.getClass();
-            Field field = cl.getDeclaredField("m");
-            field.setAccessible(true);
-            Map<String, String> writableEnv = (Map<String, String>) field.get(env);
-            writableEnv.putAll(getKeyValuePairsMap());
+            getKeyValuePairsMap().entrySet().stream().forEach(entry -> mavenProject.getProperties().setProperty(entry.getKey(), entry.getValue()));
+            getLog().info("System Properties [" + mavenProject.getProperties().toString() + "]");
         } catch (Exception e) {
             throw new IllegalStateException("Failed to set environment variable", e);
         }
     }
+
 }
